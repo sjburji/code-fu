@@ -15,5 +15,6 @@ def highest(numbers)
 end
 
 numbers = ARGV.map { |arg| arg.to_i }
+numbers = numbers.uniq
 puts "The second highest element in the list -\
-  #{ numbers.join(' ') } is '#{ highest(numbers - [highest(numbers)]) }'"
+  #{ numbers.join(' ') } is '#{ highest(numbers - [highest(numbers)]) }'" if numbers.count > 1
