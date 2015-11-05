@@ -15,31 +15,23 @@ require 'highline/import'
 
 numbers = ARGV.map { |arg| arg.to_i }
 
-size = ask('Enter matrix size?  ', Integer)
-puts 'Invalid input' and exit if not numbers.count == size * size
+size = Math.sqrt(numbers.count)
+puts 'Invalid input' and exit if size.floor == size and not size.floor.integer?
 
 puts 'Input matrix -'
 matrix = []
 (0..size-1).each do |s|
   matrix << Array.new(size)
 end
+element = ask('Enter input element? ', Integer) { |q| numbers.include? q }
 
 i = 0
-(0..size - 1).each do |r|
-  (0..size - 1).each do |c|
-    matrix[r][c] = numbers[i]
-    i += 1
-  end
-end
-element = ask('Enter input element?  ', Integer) { |q| numbers.include? q }
-
 row, col = -1, -1
 (0..size - 1).each do |r|
   (0..size - 1).each do |c|
-    if matrix[r][c] == element
-      row = r
-      col = c
-    end
+    matrix[r][c] = numbers[i]
+    row, col = r, c if matrix[r][c] == element
+    i += 1
   end
 end
 
